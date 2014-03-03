@@ -1,0 +1,208 @@
+---
+help:
+  synopsis: show this list
+  description: |
+    help         show this list
+    log          show command history
+    pivot        run one iteration of the simplex method
+    read         read a file of format .lp
+    undo         reverse last undo
+    replace      replace the current objective function
+    show         show information about the current dictionary
+    undo         erase last change
+    reinstate    reinstate the current objective function
+    quit         quit the program (exit and q do the same)
+    
+    Type 'help <command>' for further
+    information about a specific command.
+
+help:
+  description: |
+    help shows a list of available commands.
+    
+    Syntax:
+    help
+    
+redo:
+  description: |
+    redo reverses the last undo
+    
+    Syntax:
+    redo
+    
+
+undo:
+  description: |
+    undo erases the last change done to the current linear program.
+    
+    Syntax:
+    undo
+    
+
+quit: 
+  description: |
+    quit the program (exit and q do the same)
+    
+    Syntax:
+    quit or q or exit
+
+
+log:
+  description: |
+    log prints out a command history list.
+    
+    Syntax:
+    log
+    
+
+pivot:
+  description: |
+    The pivot command runs one iteration of the simplex method
+    on the current linear program and then prints out its
+    dictionary.
+  
+    Syntax:
+    pivot ((dual/primal) <entering index> <leaving index>)
+    
+    A 'dual' argument will tell the program to do one iteration
+    of the dual simplex method using the given entering and
+    leaving variables. If no 'dual' argument is given, the
+    entering and leaving index arguments become the first and
+    second argument.
+    
+    Examples:
+    pivot            Run one iteration of the primal simplex
+                     method with entering and leaving variables
+                     calculated using the largest coefficient rule.
+    pivot primal     Same as above.
+    pivot dual       Same as above with the dual simplex method.
+    pivot 2 3        Run one iteration of the primal simplex
+                     method with column 2 being the entering
+                     variable and row 3 being the leaving
+                     variable.
+    pivot primal 2 3 Same as above.
+    pivot dual 2 3   Same as above with the dual simplex method.
+
+
+read:
+  description: |
+    read is used to read a file of format lps into the
+    program. read does not override the current progress,
+    so it is possible to undo a read.
+    
+    Syntax:
+    read <filename>
+    
+    lps format:
+    The lps format input syntax is similar to that of
+    standard form of linear programs. An lps file should
+    have the following format:
+    max        c_1  x_1 + c_2  x_2 + ... + c_n  x_n
+    subject to c_11 x_1 + c_12 x_2 + ... + c_1n x_n <= b_1
+               c_21 x_1 + c_22 x_2 + ... + c_2n x_n <= b_2
+                             ...                          
+               c_m1 x_1 + c_m2 x_2 + ... + c_mn x_n <= b_m
+    where c and b are double precision numbers in decimal form.
+    
+
+reinstate:
+  description: |
+    reinstate replaces the objective function of the current linear
+    program with the original objective function fitting the current
+    dictionary.
+    
+    Syntax:
+    reinstate
+
+replace:
+  description: |
+    replace replaces the objective function of
+    the current linear program.
+    
+    Syntax:
+    replace (coeffs..)
+    
+    coeffs represent the coefficients in the primal objective function
+    of the current linear program. The number of coeffs (arguments) must
+    match the number of decision variables. This command prints out the
+    dictionary of the program after the objective has been replaced.
+    
+    Examples:
+    replace          Replace the coefficients of the decision variables
+                     with only -1's ready to run phase one of the
+                     simplex method.
+    replace 1 2 -3   Replace the coefficients of the decision variables
+                     with 1, 2 and -3, respectively.
+    
+
+show:
+  description: |
+    show has several subcommands that prints out various information
+    about the current dictionary of the linear program.
+    
+    Syntax:
+    show <subcommand>
+      
+    Subcommands:
+    dual             show the dual dictionary
+    feasibility      show whether the dictionary is feasible or not
+    optimality       show whether the dictionary is optimal or not
+    primal           show the primal dictionary
+    solution         show the basic (current) solution
+    
+    To get help for any of the subcommands, type 'help <subcommand>'.
+  subcommand:
+    - dual:
+        description: |
+          dual prints out a dual dictionary of the current
+          linear program. For the primal, see the primal command
+          
+          Syntax:
+          show dual (<precision>)
+          
+          precision tells the program how many decimals to use
+          for each number in the output. A negative number will
+          tell the program to calculate precision automatically.
+          Standard precision is two decimals.
+
+    - feasibility:
+        description: |
+          feasibility shows whether the primal or dual dictionary
+          of the current linear program is feasible or not.
+          
+          Syntax:
+          show feasibility
+
+    - optimality:
+        description: |
+          optimality shows whether the dictionary of the current
+          linear program is optimal or not.
+          
+          Syntax:
+          show optimality
+
+    - primal:
+        description: |
+          primal prints out a primal dictionary of the current
+          linear program. For the dual, see the dual command.
+          
+          Syntax:
+          show primal (<precision>)
+          
+          precision tells the program how many decimals to use
+          for each number in the output. A negative number will
+          tell the program to calculate precision automatically.
+          Standard precision is two decimals.
+
+    - solution:
+        description: |
+          solution prints out a solution to the current linear program.
+          
+          Syntax:
+          show solution (<precision>)
+          
+          precision tells the program how many decimals to use
+          for each number in the output. A negative number will
+          tell the program to calculate precision automatically.
+          Standard precision is two decimals.
+...
